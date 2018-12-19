@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/docker/compose-on-kubernetes/api/client/clientset"
-	"github.com/docker/compose-on-kubernetes/api/compose/v1beta2"
+	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
 	"github.com/docker/compose-on-kubernetes/api/labels"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources/diff"
@@ -20,15 +20,15 @@ type impersonatingResourceUpdaterProvider struct {
 	ownerCache StackOwnerCacher
 }
 
-func (p *impersonatingResourceUpdaterProvider) getUpdaterForMutation(stack *v1beta2.Stack) (resourceUpdater, error) {
+func (p *impersonatingResourceUpdaterProvider) getUpdaterForMutation(stack *latest.Stack) (resourceUpdater, error) {
 	return p.getUpdater(stack, false)
 }
 
-func (p *impersonatingResourceUpdaterProvider) getUpdaterForDeletion(stack *v1beta2.Stack) (resourceUpdater, error) {
+func (p *impersonatingResourceUpdaterProvider) getUpdaterForDeletion(stack *latest.Stack) (resourceUpdater, error) {
 	return p.getUpdater(stack, true)
 }
 
-func (p *impersonatingResourceUpdaterProvider) getUpdater(stack *v1beta2.Stack, acceptDirtyImpersonation bool) (resourceUpdater, error) {
+func (p *impersonatingResourceUpdaterProvider) getUpdater(stack *latest.Stack, acceptDirtyImpersonation bool) (resourceUpdater, error) {
 	ic := p.ownerCache.get(stack, acceptDirtyImpersonation)
 	localConfig := p.config
 	localConfig.Impersonate = ic
@@ -58,7 +58,7 @@ var deleteOptions = metav1.DeleteOptions{
 type k8sResourceUpdater struct {
 	stackClient   clientset.Interface
 	k8sclient     k8sclientset.Interface
-	originalStack *v1beta2.Stack
+	originalStack *latest.Stack
 }
 
 func (u *k8sResourceUpdater) applyDaemonsets(toAdd, toUpdate, toDelete []appstypes.DaemonSet) error {
@@ -153,13 +153,13 @@ func (u *k8sResourceUpdater) applyStackDiff(d *diff.StackStateDiff) error {
 	return nil
 }
 
-func (u *k8sResourceUpdater) updateStackStatus(status v1beta2.StackStatus) (*v1beta2.Stack, error) {
+func (u *k8sResourceUpdater) updateStackStatus(status latest.StackStatus) (*latest.Stack, error) {
 	if u.originalStack.Status != nil && *u.originalStack.Status == status {
 		return u.originalStack, nil
 	}
 	newStack := u.originalStack.Clone()
 	newStack.Status = &status
-	updated, err := u.stackClient.ComposeV1beta2().Stacks(u.originalStack.Namespace).WithSkipValidation().Update(newStack)
+	updated, err := u.stackClient.ComposeV1alpha3().Stacks(u.originalStack.Namespace).WithSkipValidation().Update(newStack)
 	if err != nil {
 		return nil, errors.Wrapf(err, "k8sResourceUpdater: error while patching stack %s", stackresources.ObjKey(u.originalStack.Namespace, u.originalStack.Name))
 	}
