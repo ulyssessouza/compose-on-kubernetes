@@ -3,7 +3,7 @@ package registry
 import (
 	"context"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/api/compose/v1beta1"
 	log "github.com/sirupsen/logrus"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

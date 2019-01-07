@@ -3,7 +3,7 @@ package convert
 import (
 	"fmt"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

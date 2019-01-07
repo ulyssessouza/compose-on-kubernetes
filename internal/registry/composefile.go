@@ -3,7 +3,7 @@ package registry
 import (
 	"context"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	iv "github.com/docker/compose-on-kubernetes/internal/internalversion"
 	log "github.com/sirupsen/logrus"
 	apiequality "k8s.io/apimachinery/pkg/api/equality"

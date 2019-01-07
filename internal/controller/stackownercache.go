@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/docker/compose-on-kubernetes/api/client/clientset"
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"
 	log "github.com/sirupsen/logrus"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
@@ -55,7 +55,7 @@ func NewStackOwnerCache(config *rest.Config) (StackOwnerCacher, error) {
 	}
 	return &stackOwnerCache{
 		data:   make(map[string]stackOwnerCacheEntry),
-		getter: &apiOwnerGetter{cs.ComposeV1alpha3().RESTClient()},
+		getter: &apiOwnerGetter{cs.ComposeLatest().RESTClient()},
 	}, nil
 }
 

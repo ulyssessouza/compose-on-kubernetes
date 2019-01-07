@@ -19,6 +19,7 @@ type Interface interface {
 	ComposeV1beta1() composev1beta1.ComposeV1beta1Interface
 	// Deprecated: please explicitly pick a version if possible.
 	Compose() composev1beta1.ComposeV1beta1Interface
+	ComposeLatest() composev1alpha3.ComposeV1alpha3Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
@@ -36,6 +37,11 @@ func (c *Clientset) ComposeV1alpha3() composev1alpha3.ComposeV1alpha3Interface {
 		return nil
 	}
 	return c.ComposeV1alpha3Client
+}
+
+// ComposeLatest retrieves the latest version of the client
+func (c *Clientset) ComposeLatest() composev1alpha3.ComposeV1alpha3Interface {
+	return c.ComposeV1alpha3()
 }
 
 // ComposeV1beta2 retrieves the ComposeV1beta2Client

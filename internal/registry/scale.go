@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/internal/conversions"
 	"github.com/docker/compose-on-kubernetes/internal/convert"
 	iv "github.com/docker/compose-on-kubernetes/internal/internalversion"

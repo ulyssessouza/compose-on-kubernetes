@@ -3,7 +3,7 @@ package registry
 import (
 	"testing"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	iv "github.com/docker/compose-on-kubernetes/internal/internalversion"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apiserver/pkg/authentication/user"

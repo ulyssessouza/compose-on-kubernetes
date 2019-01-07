@@ -2,7 +2,7 @@ package internalversion
 
 import (
 	"github.com/docker/compose-on-kubernetes/api/compose/impersonation"
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 )

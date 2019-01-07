@@ -3,7 +3,7 @@ package builders
 import (
 	"time"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

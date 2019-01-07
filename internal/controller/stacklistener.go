@@ -5,7 +5,7 @@ import (
 
 	"github.com/docker/compose-on-kubernetes/api/client/clientset"
 	"github.com/docker/compose-on-kubernetes/api/client/informers"
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"k8s.io/client-go/tools/cache"

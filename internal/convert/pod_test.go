@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"
 	. "github.com/docker/compose-on-kubernetes/internal/test/builders"
 	"github.com/stretchr/testify/assert"

@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources/diff"
 	. "github.com/docker/compose-on-kubernetes/internal/test/builders"

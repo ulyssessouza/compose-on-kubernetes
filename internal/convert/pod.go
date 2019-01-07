@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/pkg/errors"
 	apiv1 "k8s.io/api/core/v1"

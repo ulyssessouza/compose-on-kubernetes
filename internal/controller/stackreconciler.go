@@ -3,7 +3,7 @@ package controller
 import (
 	"time"
 
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/internal/convert"
 	"github.com/docker/compose-on-kubernetes/internal/deduplication"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"

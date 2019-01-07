@@ -162,8 +162,17 @@ func getTimeout(tlsExpireTimeout time.Duration) time.Duration {
 
 var loopbackIP = net.ParseIP("127.0.0.1")
 
+func registerAggregatedAPIs(aggregatorClient kubeaggreagatorv1beta1.APIServiceInterface, caBundle []byte, serviceNamespace, serviceName string, apiVersions ...string) error {
+	for ix, v := range apiVersions {
+		if err := registerAggregatedAPI(aggregatorClient, caBundle, serviceNamespace, serviceName, v, int32(ix+15)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func registerAggregatedAPI(aggregatorClient kubeaggreagatorv1beta1.APIServiceInterface,
-	apiVersion string, caBundle []byte, serviceNamespace, serviceName string, versionPriority int32) error {
+	caBundle []byte, serviceNamespace, serviceName, apiVersion string, versionPriority int32) error {
 	apiService := &apiregistrationv1beta1types.APIService{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: apiVersion + ".compose.docker.com",
@@ -250,33 +259,12 @@ func runComposeServer(o *apiServerOptions, stopCh <-chan struct{}) error {
 	})
 	server.GenericAPIServer.AddPostStartHook("start-compose-server-informers", func(context genericapiserver.PostStartHookContext) error {
 		config.GenericConfig.SharedInformerFactory.Start(context.StopCh)
-		if err := registerAggregatedAPI(
+		return registerAggregatedAPIs(
 			aggregatorClient.APIServices(),
-			v1beta1.SchemeGroupVersion.Version,
 			caBundle,
 			o.serviceNamespace,
 			o.serviceName,
-			15,
-		); err != nil {
-			return err
-		}
-		if err := registerAggregatedAPI(
-			aggregatorClient.APIServices(),
-			v1beta2.SchemeGroupVersion.Version,
-			caBundle,
-			o.serviceNamespace,
-			o.serviceName,
-			16,
-		); err != nil {
-			return err
-		}
-		return registerAggregatedAPI(
-			aggregatorClient.APIServices(),
-			v1alpha3.SchemeGroupVersion.Version,
-			caBundle,
-			o.serviceNamespace,
-			o.serviceName,
-			17,
+			v1beta1.SchemeGroupVersion.Version, v1beta2.SchemeGroupVersion.Version, v1alpha3.SchemeGroupVersion.Version,
 		)
 	})
 

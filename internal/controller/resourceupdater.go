@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/docker/compose-on-kubernetes/api/client/clientset"
-	latest "github.com/docker/compose-on-kubernetes/api/compose/v1alpha3"
+	"github.com/docker/compose-on-kubernetes/api/compose/latest"
 	"github.com/docker/compose-on-kubernetes/api/labels"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources"
 	"github.com/docker/compose-on-kubernetes/internal/stackresources/diff"
@@ -159,7 +159,7 @@ func (u *k8sResourceUpdater) updateStackStatus(status latest.StackStatus) (*late
 	}
 	newStack := u.originalStack.Clone()
 	newStack.Status = &status
-	updated, err := u.stackClient.ComposeV1alpha3().Stacks(u.originalStack.Namespace).WithSkipValidation().Update(newStack)
+	updated, err := u.stackClient.ComposeLatest().Stacks(u.originalStack.Namespace).WithSkipValidation().Update(newStack)
 	if err != nil {
 		return nil, errors.Wrapf(err, "k8sResourceUpdater: error while patching stack %s", stackresources.ObjKey(u.originalStack.Namespace, u.originalStack.Name))
 	}
